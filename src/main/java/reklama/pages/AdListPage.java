@@ -7,6 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 import reklama.annotations.ElementTitle;
 import reklama.annotations.PageName;
 
+import java.util.List;
+
 import static reklama.testData.TestData.getDriver;
 
 @PageName("AdList Page")
@@ -23,6 +25,10 @@ public class AdListPage extends BasePage {
     @ElementTitle("Favorite")
     @FindBy(id = "favorites-link")
     public WebElement favoriteButton;
+
+    @ElementTitle("Ad cost")
+    @FindBy(xpath = "//a[@class='price']//span[@class='val']")
+    public List<WebElement> adCost;
 
     @Override
     public void isLoaded() {

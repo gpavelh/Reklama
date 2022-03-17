@@ -1,9 +1,8 @@
-#language: en
-
+@tests
 Feature: reklama ad test
 
-  @test
-  Scenario: Add to favourite ad
+  @test1
+  Scenario: Add to favorites from sale ad
     * page "Main Page" open
     * click to category "Легковые авто"
     * page "Category Page" open
@@ -16,3 +15,13 @@ Feature: reklama ad test
     * hover and click to button "Add to favorite"
     * click to button "Favorite"
     * equals favorite ads and stash value "lot_price_1"
+
+  @test2
+  Scenario: Add some ad to favorites from ads list
+    * page "Main Page" open
+    * click to category "Лес"
+    * page "AdList Page" open
+    * save all field value "Ad cost" to stash with key "lots_prices_1"
+    * add all ad to favorite
+    * click to button "Favorite"
+    * equals all favorite ads and stash value "lots_prices_1"

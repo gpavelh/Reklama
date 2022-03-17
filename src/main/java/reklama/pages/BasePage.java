@@ -31,7 +31,7 @@ public abstract class BasePage {
     }
 
 
-    public static <T> WebElement getFieldByAnnotation(Class<? extends BasePage> page, String fieldName) {
+    public static <T> T getFieldByAnnotation(Class<? extends BasePage> page, String fieldName) {
         String field = Arrays.stream(page.getFields())
                 .filter(f -> f.isAnnotationPresent(ElementTitle.class))
                 .filter(f -> f.getAnnotation(ElementTitle.class).value().equals(fieldName)).findFirst().orElseThrow(() -> new RuntimeException(String.format("Error while searching field '%s' and annotation ElementTitle", fieldName))).getName();
@@ -42,11 +42,7 @@ public abstract class BasePage {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (obj instanceof WebElement) {
-            return (WebElement) obj;
-        } else {
-            throw new RuntimeException("Object in not a WebElement");
-        }
+        return (T) obj;
     }
 
     public static Object getField(String fieldName) {

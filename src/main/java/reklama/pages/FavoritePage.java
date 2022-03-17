@@ -22,7 +22,7 @@ public class FavoritePage extends BasePage{
     public WebElement pageTable;
 
     public static List<WebElement> getFavoriteAdsCosts() {
-        return getDriver().findElements(By.xpath("//div[@class='table_ver1']//span[@class='normal-price']"));
+        return getDriver().findElements(By.xpath("//div[@class='table_ver1']//span[@class='normal-price' or @class='priceTip normal-price']"));
     }
 
     @Override

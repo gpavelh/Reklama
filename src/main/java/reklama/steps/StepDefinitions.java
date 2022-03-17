@@ -43,8 +43,23 @@ public class StepDefinitions {
         subSteps.saveElemValueToStash(elemName, stashKey);
     }
 
+    @When("save all field value {string} to stash with key {string}")
+    public void saveAllValuesToStash(String elemName, String stashKey) {
+        subSteps.saveAllValueToStash(elemName, stashKey);
+    }
+
+    @When("add all ad to favorite")
+    public void addAllAdToFavorites() {
+        subSteps.hoverAndClickToAllElements("Ad cost");
+    }
+
     @When("equals favorite ads and stash value {string}")
     public void equalsValueAndStash(String stashKey) {
         subSteps.checkAdsCostAndStashValue(Stash.getValue(stashKey));
+    }
+
+    @When("equals all favorite ads and stash value {string}")
+    public void equalsAllValueAndStash(String stashKey) {
+        subSteps.checkAllAdsCostAndStashValue(Stash.getValue(stashKey));
     }
 }

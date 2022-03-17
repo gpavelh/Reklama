@@ -27,7 +27,7 @@ public class SubSteps {
      * @param elementName
      */
     public void clickToElement(String elementName) {
-        getFieldByAnnotation(BasePage.currentPage.getClass(), elementName).click();
+        ((WebElement) getFieldByAnnotation(BasePage.currentPage.getClass(), elementName)).click();
     }
 
     /**
@@ -39,6 +39,11 @@ public class SubSteps {
         getCategory(elementName).click();
     }
 
+    /**
+     * hover and click to element
+     *
+     * @param elementName
+     */
     public void hoverAndClickToElem(String elementName) {
         WebElement elem = getFieldByAnnotation(BasePage.currentPage.getClass(), elementName);
         Actions actions = new Actions(getDriver());
@@ -51,15 +56,36 @@ public class SubSteps {
     }
 
     public void openAd(int adNumber) {
-        getFieldByAnnotation(BasePage.currentPage.getClass(), "Ad List")
-                .findElements(By.xpath(".//tbody//tr"))
-                .get(adNumber - 1)
-                .click();
+        try {
+            ((WebElement) getFieldByAnnotation(BasePage.currentPage.getClass(), "Ad List"))
+                    .findElements(By.xpath(".//tbody//tr"))
+                    .get(adNumber - 1)
+                    .click();
+        } catch (IndexOutOfBoundsException e) {
+            throw new RuntimeException("Ad number exceeds their number");
+        }
     }
 
     public void saveElemValueToStash(String elemName, String stashKey) {
-        String value = getFieldByAnnotation(BasePage.currentPage.getClass(), elemName).getText();
+        String value = ((WebElement) getFieldByAnnotation(BasePage.currentPage.getClass(), elemName)).getText();
         Stash.put(stashKey, value);
+    }
+
+    public void saveAllValueToStash(String elemName, String stashKey) {
+        List<String> values = ((List<WebElement>) getFieldByAnnotation(BasePage.currentPage.getClass(), elemName))
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
+        Stash.put(stashKey, values);
+    }
+
+    public void hoverAndClickToAllElements(String elemName) {
+        List<WebElement> listElements = getFieldByAnnotation(BasePage.currentPage.getClass(), elemName);
+        listElements.forEach(element -> {
+            Actions actions = new Actions(getDriver());
+            actions.moveToElement(element).build().perform();
+            getDriver().findElement(By.xpath("//tr[@class='over']//a[@class='fav-add']/img")).click();
+        });
     }
 
     public void checkAdsCostAndStashValue(String stashValue) {
@@ -67,6 +93,15 @@ public class SubSteps {
                 .filter(f -> f.getText().equals(stashValue))
                 .collect(Collectors.toList());
         Assertions.assertTrue(resultList.size() >= 1, "Values is not present!");
+    }
+
+    public void checkAllAdsCostAndStashValue(List<String> stashValue) {
+        List<String> result = getFavoriteAdsCosts()
+                .stream()
+                .map(WebElement::getText)
+                .filter(f -> stashValue.stream().anyMatch(f::equals))
+                .collect(Collectors.toList());
+        Assertions.assertEquals(result.size(), stashValue.size(), "Values is not present!");
     }
 
     /**
