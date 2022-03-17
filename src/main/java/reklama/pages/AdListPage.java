@@ -30,6 +30,10 @@ public class AdListPage extends BasePage {
     @FindBy(xpath = "//a[@class='price']//span[@class='val']")
     public List<WebElement> adCost;
 
+    @ElementTitle("Favorites count")
+    @FindBy(id = "favorites_count")
+    public WebElement favoriteCount;
+
     @Override
     public void isLoaded() {
         if (!adListTable.isDisplayed()) {

@@ -21,6 +21,14 @@ public class MainPage extends BasePage {
     @FindBy(id = "search_value")
     public WebElement searchField;
 
+    @ElementTitle("Search button")
+    @FindBy(name = "imgSearch")
+    public WebElement searchButton;
+
+    @ElementTitle("Advanced search button")
+    @FindBy(xpath = "//a[.='Расширенный поиск']")
+    public WebElement advancedSearchButton;
+
     @ElementTitle("Мои объявления")
     @FindBy(id = "maniSluds")
     public WebElement myAds;

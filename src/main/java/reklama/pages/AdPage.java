@@ -31,6 +31,10 @@ public class AdPage extends BasePage {
     @FindBy(id = "favorites-link")
     public WebElement favoriteButton;
 
+    @ElementTitle("Favorites count")
+    @FindBy(id = "favorites_count")
+    public WebElement favoriteCount;
+
     @Override
     public void isLoaded() {
         if (!pageContent.isDisplayed()){

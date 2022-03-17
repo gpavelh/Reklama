@@ -104,6 +104,16 @@ public class SubSteps {
         Assertions.assertEquals(result.size(), stashValue.size(), "Values is not present!");
     }
 
+    public void search(String searchAd) {
+        ((WebElement) getFieldByAnnotation(BasePage.currentPage.getClass(), "Search field")).sendKeys(searchAd);
+        ((WebElement) getFieldByAnnotation(BasePage.currentPage.getClass(), "Search button")).click();
+    }
+
+    public void checkFavoriteCountOnIcon(String elementName, int count) {
+        String favorCount = ((WebElement) getFieldByAnnotation(BasePage.currentPage.getClass(), elementName)).getText();
+        Assertions.assertEquals(count,Integer.parseInt(favorCount),"Values are not equal!");
+    }
+
     /**
      * init page
      *

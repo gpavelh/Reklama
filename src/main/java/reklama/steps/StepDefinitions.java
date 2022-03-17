@@ -28,6 +28,11 @@ public class StepDefinitions {
         subSteps.hoverAndClickToElem(elemName);
     }
 
+    @And("check that favorite count equals {int} on icon {string}")
+    public void checkFavoriteCount(int count, String elemName) {
+        subSteps.checkFavoriteCountOnIcon(elemName, count);
+    }
+
     @And("choose brand/type/breed/model {string}")
     public void chooseTableElementMenu(String elemName) {
         subSteps.clickToTableElement(elemName);
@@ -62,4 +67,10 @@ public class StepDefinitions {
     public void equalsAllValueAndStash(String stashKey) {
         subSteps.checkAllAdsCostAndStashValue(Stash.getValue(stashKey));
     }
+
+    @When("quick/advanced search ad {string}")
+    public void quickSearchAd(String adName) {
+        subSteps.search(adName);
+    }
+
 }
